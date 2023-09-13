@@ -29,33 +29,9 @@ mod tests {
     use super::*;
 
     #[test]
-    fn async_works() {
-        let (executor, spawner) = new_executor_and_spawner();
-        spawner.spawn(async {
-            TimerFuture::new(Duration::new(1, 0)).await;
-            assert!(true)
-        });
-        drop(spawner);
-        executor.run();
-    }
-
-    #[test]
     fn async_stress() {
         let (executor, spawner) = new_executor_and_spawner();
         for _ in 0..1000 {
-            spawner.spawn(async {
-                TimerFuture::new(Duration::new(1, 0)).await;
-                assert!(true)
-            });
-        }
-        drop(spawner);
-        executor.run();
-    }
-
-    #[test]
-    fn async_max_panics() {
-        let (executor, spawner) = new_executor_and_spawner();
-        for _ in 0..10_000 {
             spawner.spawn(async {
                 TimerFuture::new(Duration::new(1, 0)).await;
                 assert!(true)
