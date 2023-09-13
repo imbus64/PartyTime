@@ -14,3 +14,7 @@ impl ArcWake for Task {
             .expect("too many tasks queued");
     }
 }
+
+pub fn sleep(duration: Duration) -> impl Future<Output = ()> {
+    TimerFuture::new(duration)
+}
