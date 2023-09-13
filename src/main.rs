@@ -7,6 +7,8 @@ async fn regular_async_fn() {
     println!("Regular async fn");
 }
 
+async fn nothing() {}
+
 fn main() {
     let (executor, spawner) = new_executor_and_spawner();
     for task_id in 1..=1000 {
@@ -14,6 +16,7 @@ fn main() {
             TimerFuture::new(Duration::new(1, (task_id * 1000000) as u32)).await;
             if (task_id) % INTERVAL == 0 {
                 println!("Task-ID {}..{} completed...", task_id - INTERVAL, task_id);
+                nothing().await; // Use await as usual
             }
         });
     }
